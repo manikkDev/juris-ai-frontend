@@ -1,4 +1,4 @@
-import { LayoutDashboard, Briefcase, Brain, FlaskConical, Shield, UserCircle, LogOut, Scale } from "lucide-react";
+import { LayoutDashboard, Briefcase, Brain, FlaskConical, Shield, UserCircle, LogOut, Scale, Sparkles } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/services/authContext";
@@ -20,6 +20,7 @@ const mainItems = [
   { title: "Cases", url: "/cases", icon: Briefcase },
   { title: "AI Insights", url: "/insights", icon: Brain },
   { title: "Simulation", url: "/simulation", icon: FlaskConical },
+  { title: "Advanced AI", url: "/advanced-ai", icon: Sparkles },
 ];
 
 const adminItems = [

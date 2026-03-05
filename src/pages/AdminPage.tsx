@@ -2,15 +2,17 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { sampleCases } from "@/services/mockData";
+import { useCases, useJudges } from "@/hooks/useFirestoreData";
 import { toast } from "sonner";
-import { Plus, Upload, Users, FileText } from "lucide-react";
+import { Plus, Upload, Users, FileText, AlertTriangle } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 
 export default function AdminPage() {
   const [caseType, setCaseType] = useState("");
   const [court, setCourt] = useState("");
   const [judge, setJudge] = useState("");
+  const { cases, loading, error } = useCases();
+  const { judges, loading: judgesLoading } = useJudges();
 
   const handleAddCase = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,17 +22,43 @@ export default function AdminPage() {
     setJudge("");
   };
 
+  if (loading || judgesLoading) {
+    return (
+      <div className="flex items-center justify-center py-20 text-muted-foreground">
+        <div className="text-center space-y-2">
+          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
+          <p className="text-sm">Loading admin data from Firestore...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center space-y-3 max-w-md">
+          <AlertTriangle className="h-10 w-10 text-destructive mx-auto" />
+          <h2 className="text-lg font-semibold">Failed to load admin data</h2>
+          <p className="text-sm text-muted-foreground">{error}</p>
+          <Button variant="outline" size="sm" onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const uniqueCourts = new Set(cases.map((c) => c.court));
+
   return (
     <div className="space-y-6 max-w-4xl">
       <div>
         <h1 className="text-2xl font-display font-bold">Admin Panel</h1>
-        <p className="text-sm text-muted-foreground">System administration and case management</p>
+        <p className="text-sm text-muted-foreground">System administration — eCourts / AWS Open Data (2020-2024)</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Cases" value={sampleCases.length} icon={FileText} color="primary" />
-        <StatCard title="Judges" value={10} icon={Users} color="info" />
-        <StatCard title="Courts" value={5} icon={FileText} color="success" />
+        <StatCard title="Total Cases" value={cases.length} icon={FileText} color="primary" />
+        <StatCard title="Judges" value={judges.length} icon={Users} color="info" />
+        <StatCard title="Courts" value={uniqueCourts.size} icon={FileText} color="success" />
         <StatCard title="System Uptime" value="99.9%" icon={FileText} color="warning" />
       </div>
 

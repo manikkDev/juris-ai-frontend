@@ -1,22 +1,48 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { sampleCases } from "@/services/mockData";
+import { useCases } from "@/hooks/useFirestoreData";
 import { RiskBadge } from "@/components/RiskBadge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Calendar, FileText, Scale, Brain } from "lucide-react";
+import { ArrowLeft, Calendar, FileText, Scale, Brain, User, Building, AlertTriangle } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function CaseDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const caseData = sampleCases.find((c) => c.caseId === id);
+  const { cases, loading, error } = useCases();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20 text-muted-foreground">
+        <div className="text-center space-y-2">
+          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
+          <p className="text-sm">Loading case details from Firestore...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center space-y-3 max-w-md">
+          <AlertTriangle className="h-10 w-10 text-destructive mx-auto" />
+          <h2 className="text-lg font-semibold">Failed to load case</h2>
+          <p className="text-sm text-muted-foreground">{error}</p>
+          <Button variant="outline" size="sm" onClick={() => navigate(-1)}>Go Back</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const caseData = cases.find((c) => c.caseId === id);
 
   if (!caseData) return <div className="text-center py-20 text-muted-foreground">Case not found</div>;
 
   const factors = [
-    { name: "Number of adjournments", impact: caseData.adjournments > 5 ? "High" : "Medium", value: caseData.adjournments },
-    { name: "Case age (years)", impact: "Medium", value: ((new Date().getTime() - new Date(caseData.filedDate).getTime()) / (365.25 * 86400000)).toFixed(1) },
-    { name: "Case complexity", impact: caseData.caseType === "Constitutional" ? "High" : "Low", value: caseData.caseType },
+    { name: "Number of adjournments", impact: caseData.adjournments > 5 ? "High" : caseData.adjournments > 2 ? "Medium" : "Low", value: caseData.adjournments },
+    { name: "Case age (years)", impact: ((new Date().getTime() - new Date(caseData.filedDate).getTime()) / (365.25 * 86400000)) > 2 ? "High" : "Medium", value: ((new Date().getTime() - new Date(caseData.filedDate).getTime()) / (365.25 * 86400000)).toFixed(1) },
+    { name: "Case category", impact: caseData.caseType.includes("Criminal") ? "High" : "Medium", value: caseData.category },
     { name: "Court workload", impact: "Medium", value: caseData.court },
   ];
 
@@ -28,8 +54,9 @@ export default function CaseDetailPage() {
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-display font-bold">{caseData.caseId}</h1>
-          <p className="text-sm text-muted-foreground">{caseData.caseType} · {caseData.court}</p>
+          <h1 className="text-2xl font-display font-bold">{caseData.caseNumber}</h1>
+          <p className="text-sm text-muted-foreground">{caseData.caseType} · {caseData.court} · {caseData.bench}</p>
+          <p className="text-xs text-muted-foreground mt-1">Source: {caseData.source}</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">Recommend Action</Button>
@@ -37,12 +64,40 @@ export default function CaseDetailPage() {
         </div>
       </div>
 
+      {/* Parties */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="stat-card flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-primary/10">
+            <User className="h-4 w-4 text-primary" />
+          </div>
+          <div>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Petitioner</p>
+            <p className="text-sm font-semibold">{caseData.petitioner}</p>
+          </div>
+        </div>
+        <div className="stat-card flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-destructive/10">
+            <Building className="h-4 w-4 text-destructive" />
+          </div>
+          <div>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Respondent</p>
+            <p className="text-sm font-semibold">{caseData.respondent}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Description */}
+      <div className="stat-card">
+        <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Case Description</p>
+        <p className="text-sm">{caseData.description}</p>
+      </div>
+
       {/* Metadata */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: "Judge", value: caseData.judge, icon: Scale },
-          { label: "Filed Date", value: caseData.filedDate, icon: Calendar },
-          { label: "Last Hearing", value: caseData.lastHearingDate, icon: Calendar },
+          { label: "Filed Date", value: new Date(caseData.filedDate).toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" }), icon: Calendar },
+          { label: "Last Hearing", value: new Date(caseData.lastHearingDate).toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" }), icon: Calendar },
           { label: "Adjournments", value: caseData.adjournments, icon: FileText },
         ].map((item) => (
           <div key={item.label} className="stat-card flex items-center gap-3">

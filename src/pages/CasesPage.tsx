@@ -1,20 +1,48 @@
 import { useState } from "react";
-import { sampleCases } from "@/services/mockData";
+import { useCases } from "@/hooks/useFirestoreData";
 import { RiskBadge } from "@/components/RiskBadge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Search, AlertTriangle } from "lucide-react";
 
 export default function CasesPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const navigate = useNavigate();
+  const { cases, loading, error } = useCases();
 
-  const filtered = sampleCases.filter((c) => {
-    const matchesSearch = c.caseId.toLowerCase().includes(search.toLowerCase()) ||
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20 text-muted-foreground">
+        <div className="text-center space-y-2">
+          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
+          <p className="text-sm">Loading cases from Firestore...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center space-y-3 max-w-md">
+          <AlertTriangle className="h-10 w-10 text-destructive mx-auto" />
+          <h2 className="text-lg font-semibold">Failed to load cases</h2>
+          <p className="text-sm text-muted-foreground">{error}</p>
+          <Button variant="outline" size="sm" onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const filtered = cases.filter((c) => {
+    const matchesSearch = c.caseNumber.toLowerCase().includes(search.toLowerCase()) ||
       c.caseType.toLowerCase().includes(search.toLowerCase()) ||
-      c.judge.toLowerCase().includes(search.toLowerCase());
+      c.judge.toLowerCase().includes(search.toLowerCase()) ||
+      c.court.toLowerCase().includes(search.toLowerCase()) ||
+      c.petitioner.toLowerCase().includes(search.toLowerCase()) ||
+      c.respondent.toLowerCase().includes(search.toLowerCase());
     const matchesStatus = statusFilter === "All" || c.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -23,7 +51,7 @@ export default function CasesPage() {
     <div className="space-y-6 max-w-[1400px]">
       <div>
         <h1 className="text-2xl font-display font-bold">Cases</h1>
-        <p className="text-sm text-muted-foreground">Browse and manage all court cases</p>
+        <p className="text-sm text-muted-foreground">Real Indian High Court cases — eCourts / AWS Open Data (2020-2024)</p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
@@ -32,7 +60,7 @@ export default function CasesPage() {
           <Input placeholder="Search cases..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
         </div>
         <div className="flex gap-2">
-          {["All", "Active", "Pending", "Adjourned", "Resolved"].map((s) => (
+          {["All", "Pending", "Resolved"].map((s) => (
             <Button key={s} size="sm" variant={statusFilter === s ? "default" : "outline"} onClick={() => setStatusFilter(s)}>
               {s}
             </Button>
@@ -44,7 +72,7 @@ export default function CasesPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b text-left text-muted-foreground">
-              <th className="pb-2 pr-4 font-medium">Case ID</th>
+              <th className="pb-2 pr-4 font-medium">Case Number</th>
               <th className="pb-2 pr-4 font-medium">Type</th>
               <th className="pb-2 pr-4 font-medium">Court</th>
               <th className="pb-2 pr-4 font-medium">Judge</th>
@@ -58,11 +86,11 @@ export default function CasesPage() {
           <tbody>
             {filtered.map((c) => (
               <tr key={c.caseId} className="border-b last:border-0 hover:bg-muted/30 transition-colors">
-                <td className="py-2.5 pr-4 font-mono text-xs">{c.caseId}</td>
-                <td className="py-2.5 pr-4">{c.caseType}</td>
+                <td className="py-2.5 pr-4 font-mono text-xs">{c.caseNumber}</td>
+                <td className="py-2.5 pr-4 text-xs">{c.caseType}</td>
                 <td className="py-2.5 pr-4 text-xs">{c.court}</td>
                 <td className="py-2.5 pr-4 text-xs">{c.judge}</td>
-                <td className="py-2.5 pr-4 text-xs">{c.filedDate}</td>
+                <td className="py-2.5 pr-4 text-xs">{new Date(c.filedDate).toLocaleDateString("en-IN")}</td>
                 <td className="py-2.5 pr-4"><RiskBadge risk={c.adjournmentRisk} /></td>
                 <td className="py-2.5 pr-4 font-bold">{c.priorityScore}</td>
                 <td className="py-2.5 pr-4 text-xs">{c.status}</td>

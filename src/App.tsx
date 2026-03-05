@@ -14,6 +14,7 @@ import SimulationPage from "@/pages/SimulationPage";
 import AdminPage from "@/pages/AdminPage";
 import ProfilePage from "@/pages/ProfilePage";
 import NotFound from "@/pages/NotFound";
+import AdvancedAIPage from "@/pages/AdvancedAI/AdvancedAIPage";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ function AppRoutes() {
       <Route path="/simulation" element={<ProtectedRoute><SimulationPage /></ProtectedRoute>} />
       <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+      <Route path="/advanced-ai" element={<ProtectedRoute><AdvancedAIPage /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

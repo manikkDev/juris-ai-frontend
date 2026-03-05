@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { sampleCases } from "@/services/mockData";
+import { useCases } from "@/hooks/useFirestoreData";
 import { Button } from "@/components/ui/button";
-import { FlaskConical, TrendingDown, Clock, CheckCircle } from "lucide-react";
+import { FlaskConical, TrendingDown, Clock, CheckCircle, AlertTriangle } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,8 +9,33 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function SimulationPage() {
   const [running, setRunning] = useState(false);
   const [results, setResults] = useState<null | { backlogReduction: number; timeSaved: number; casesResolved: number }>(null);
+  const { cases, loading, error } = useCases();
 
-  const topCases = [...sampleCases].sort((a, b) => b.priorityScore - a.priorityScore).slice(0, 10);
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20 text-muted-foreground">
+        <div className="text-center space-y-2">
+          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
+          <p className="text-sm">Loading simulation data from Firestore...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center space-y-3 max-w-md">
+          <AlertTriangle className="h-10 w-10 text-destructive mx-auto" />
+          <h2 className="text-lg font-semibold">Failed to load simulation data</h2>
+          <p className="text-sm text-muted-foreground">{error}</p>
+          <Button variant="outline" size="sm" onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const topCases = [...cases].sort((a, b) => b.priorityScore - a.priorityScore).slice(0, 10);
 
   const runSimulation = () => {
     setRunning(true);
@@ -26,7 +51,7 @@ export default function SimulationPage() {
   };
 
   const comparisonData = topCases.map((c) => ({
-    name: c.caseId.split("-").pop(),
+    name: c.caseNumber.split("/").pop(),
     before: c.priorityScore,
     after: Math.max(10, c.priorityScore - Math.round(20 + Math.random() * 30)),
   }));
@@ -53,7 +78,7 @@ export default function SimulationPage() {
           <table className="w-full text-xs">
             <thead>
               <tr className="border-b text-left text-muted-foreground">
-                <th className="pb-2 pr-4 font-medium">Case ID</th>
+                <th className="pb-2 pr-4 font-medium">Case Number</th>
                 <th className="pb-2 pr-4 font-medium">Type</th>
                 <th className="pb-2 pr-4 font-medium">Priority</th>
                 <th className="pb-2 font-medium">Risk</th>
@@ -62,7 +87,7 @@ export default function SimulationPage() {
             <tbody>
               {topCases.map((c) => (
                 <tr key={c.caseId} className="border-b last:border-0">
-                  <td className="py-2 pr-4 font-mono">{c.caseId}</td>
+                  <td className="py-2 pr-4 font-mono">{c.caseNumber}</td>
                   <td className="py-2 pr-4">{c.caseType}</td>
                   <td className="py-2 pr-4 font-bold">{c.priorityScore}</td>
                   <td className="py-2">{(c.adjournmentRisk * 100).toFixed(0)}%</td>

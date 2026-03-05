@@ -1,0 +1,107 @@
+[
+  {
+    "case_title": "Sharma vs State of Maharashtra — Tenant Eviction",
+    "court": "Bombay High Court",
+    "year": 2021,
+    "summary": "Landlord filed eviction suit against tenant for non-payment of rent for over 6 months. Tenant claimed hardship due to COVID-19 pandemic. Court held that prolonged non-payment without genuine effort to pay constitutes valid ground for eviction under Maharashtra Rent Control Act.",
+    "embedding_vector": [0.82, 0.15, 0.91, 0.03, 0.67, 0.44, 0.78, 0.12, 0.55, 0.33, 0.88, 0.21, 0.66, 0.09, 0.74, 0.50, 0.37, 0.85, 0.19, 0.60, 0.42, 0.93, 0.28, 0.71, 0.05, 0.81, 0.46, 0.14, 0.69, 0.57, 0.36, 0.90]
+  },
+  {
+    "case_title": "Gupta vs Municipal Corporation — Property Tax Dispute",
+    "court": "High Court of Delhi",
+    "year": 2022,
+    "summary": "Petitioner challenged revised property tax assessment on commercial property in Connaught Place. The reassessment increased tax liability by 340% without proper notice. Court quashed the order and directed fresh assessment following due process under Delhi Municipal Corporation Act.",
+    "embedding_vector": [0.25, 0.78, 0.33, 0.91, 0.12, 0.56, 0.44, 0.87, 0.19, 0.65, 0.38, 0.72, 0.08, 0.83, 0.51, 0.29, 0.94, 0.16, 0.63, 0.41, 0.77, 0.05, 0.88, 0.34, 0.69, 0.22, 0.57, 0.80, 0.13, 0.46, 0.71, 0.39]
+  },
+  {
+    "case_title": "Patel vs Patel — Family Property Partition",
+    "court": "High Court of Gujarat",
+    "year": 2020,
+    "summary": "Dispute between siblings over ancestral agricultural property in Ahmedabad district. Plaintiff sought partition and separate possession of joint Hindu family property. Court applied Hindu Succession Act and ordered equal division among all legal heirs including daughters.",
+    "embedding_vector": [0.45, 0.62, 0.18, 0.79, 0.33, 0.88, 0.07, 0.54, 0.71, 0.26, 0.93, 0.40, 0.15, 0.67, 0.82, 0.31, 0.58, 0.04, 0.76, 0.49, 0.22, 0.85, 0.37, 0.64, 0.11, 0.90, 0.43, 0.70, 0.28, 0.55, 0.81, 0.16]
+  },
+  {
+    "case_title": "Kumar vs State — Criminal Defamation Appeal",
+    "court": "High Court of Karnataka",
+    "year": 2023,
+    "summary": "Appellant convicted under Section 499/500 IPC for publishing defamatory article against a public official. High Court examined whether the statements fell under exceptions of fair comment on public conduct. Conviction set aside on grounds of Article 19(1)(a) free speech protections.",
+    "embedding_vector": [0.68, 0.31, 0.84, 0.17, 0.52, 0.73, 0.09, 0.46, 0.89, 0.24, 0.61, 0.38, 0.95, 0.14, 0.57, 0.76, 0.03, 0.82, 0.41, 0.69, 0.27, 0.55, 0.92, 0.18, 0.64, 0.35, 0.78, 0.06, 0.50, 0.87, 0.23, 0.72]
+  },
+  {
+    "case_title": "Singh vs Union of India — Land Acquisition Challenge",
+    "court": "High Court of Punjab and Haryana",
+    "year": 2022,
+    "summary": "Farmers challenged compulsory acquisition of agricultural land for highway construction without adequate compensation. Court held that acquisition must comply with Right to Fair Compensation Act 2013 and directed enhanced compensation at four times the market value for rural land.",
+    "embedding_vector": [0.53, 0.41, 0.76, 0.22, 0.88, 0.15, 0.64, 0.37, 0.81, 0.09, 0.70, 0.48, 0.26, 0.93, 0.34, 0.59, 0.85, 0.12, 0.67, 0.43, 0.78, 0.06, 0.51, 0.90, 0.29, 0.74, 0.17, 0.62, 0.39, 0.83, 0.25, 0.56]
+  },
+  {
+    "case_title": "Reddy vs State of Telangana — Cybercrime Bail",
+    "court": "High Court of Telangana",
+    "year": 2024,
+    "summary": "Accused sought bail in case registered under IT Act Section 66C/66D for alleged UPI fraud affecting 200+ bank customers. Court considered severity of economic offence, digital evidence trail, and flight risk before granting conditional bail with surrender of passport.",
+    "embedding_vector": [0.37, 0.85, 0.22, 0.68, 0.54, 0.11, 0.79, 0.46, 0.63, 0.30, 0.91, 0.18, 0.75, 0.42, 0.57, 0.04, 0.86, 0.33, 0.70, 0.25, 0.48, 0.92, 0.15, 0.61, 0.38, 0.83, 0.07, 0.54, 0.77, 0.20, 0.66, 0.44]
+  },
+  {
+    "case_title": "Mehra vs Landlord Association — Rent Control Act Interpretation",
+    "court": "High Court of Delhi",
+    "year": 2023,
+    "summary": "Tenant challenged eviction notice issued under Delhi Rent Control Act claiming bona fide need. Landlord sought possession for personal use after retirement. Court balanced tenant protection with landlord rights and allowed eviction with 6-month rehabilitation period for tenant.",
+    "embedding_vector": [0.79, 0.18, 0.88, 0.06, 0.63, 0.41, 0.75, 0.15, 0.52, 0.36, 0.84, 0.24, 0.69, 0.11, 0.77, 0.48, 0.33, 0.82, 0.20, 0.58, 0.45, 0.91, 0.30, 0.73, 0.08, 0.85, 0.42, 0.17, 0.66, 0.54, 0.39, 0.87]
+  },
+  {
+    "case_title": "Joshi vs Insurance Company — Motor Accident Claim",
+    "court": "Bombay High Court",
+    "year": 2021,
+    "summary": "Appeal against MACT award for inadequate compensation in fatal road accident. Deceased was sole breadwinner aged 35. Court applied structured formula from Supreme Court guidelines and enhanced compensation considering future earning potential and inflation adjustment.",
+    "embedding_vector": [0.14, 0.72, 0.45, 0.86, 0.28, 0.61, 0.39, 0.83, 0.17, 0.55, 0.90, 0.33, 0.68, 0.07, 0.76, 0.42, 0.58, 0.21, 0.84, 0.36, 0.65, 0.13, 0.79, 0.47, 0.30, 0.92, 0.25, 0.53, 0.71, 0.09, 0.81, 0.38]
+  },
+  {
+    "case_title": "NGO Forum vs State — Environmental PIL",
+    "court": "Madras High Court",
+    "year": 2022,
+    "summary": "PIL challenging industrial pollution of Cooum River by tanneries and chemical plants. Court directed immediate closure of non-compliant units and ordered State Pollution Control Board to implement real-time effluent monitoring under Environment Protection Act 1986.",
+    "embedding_vector": [0.61, 0.29, 0.74, 0.43, 0.16, 0.88, 0.35, 0.52, 0.80, 0.08, 0.67, 0.94, 0.21, 0.56, 0.39, 0.73, 0.11, 0.85, 0.47, 0.62, 0.03, 0.78, 0.32, 0.69, 0.54, 0.19, 0.91, 0.41, 0.26, 0.75, 0.14, 0.83]
+  },
+  {
+    "case_title": "Verma vs Employer — Wrongful Termination",
+    "court": "Calcutta High Court",
+    "year": 2023,
+    "summary": "Employee challenged termination from PSU bank for alleged misconduct without proper domestic inquiry. Court held that termination without following principles of natural justice under Industrial Disputes Act is void ab initio. Ordered reinstatement with 50% back wages.",
+    "embedding_vector": [0.42, 0.57, 0.23, 0.81, 0.36, 0.68, 0.14, 0.75, 0.49, 0.88, 0.31, 0.64, 0.07, 0.83, 0.52, 0.19, 0.71, 0.40, 0.86, 0.26, 0.59, 0.12, 0.77, 0.34, 0.91, 0.45, 0.08, 0.66, 0.53, 0.28, 0.80, 0.15]
+  },
+  {
+    "case_title": "Residents Association vs Builder — RERA Delay Compensation",
+    "court": "Bombay High Court",
+    "year": 2024,
+    "summary": "Homebuyers sought compensation for 3-year delay in possession of flats in Thane project. Builder cited force majeure and COVID delays. Court held builder liable under RERA Section 18 and directed payment of interest at SBI PLR + 2% for the delay period.",
+    "embedding_vector": [0.33, 0.76, 0.48, 0.19, 0.85, 0.54, 0.27, 0.71, 0.42, 0.63, 0.10, 0.89, 0.36, 0.58, 0.81, 0.22, 0.67, 0.44, 0.15, 0.73, 0.50, 0.38, 0.92, 0.25, 0.60, 0.83, 0.17, 0.46, 0.79, 0.31, 0.55, 0.88]
+  },
+  {
+    "case_title": "Devi vs Husband — Domestic Violence Protection",
+    "court": "High Court of Delhi",
+    "year": 2021,
+    "summary": "Wife sought protection order under Domestic Violence Act 2005 alleging physical and economic abuse. Court granted residence order and monetary relief, emphasizing that economic deprivation including denial of maintenance constitutes domestic violence under Section 3 of the Act.",
+    "embedding_vector": [0.56, 0.38, 0.72, 0.14, 0.89, 0.27, 0.63, 0.45, 0.81, 0.19, 0.55, 0.34, 0.91, 0.08, 0.66, 0.43, 0.77, 0.22, 0.58, 0.36, 0.84, 0.11, 0.70, 0.49, 0.25, 0.87, 0.32, 0.61, 0.16, 0.74, 0.41, 0.93]
+  },
+  {
+    "case_title": "Tech Corp vs Revenue Authority — GST Dispute",
+    "court": "High Court of Karnataka",
+    "year": 2023,
+    "summary": "IT company challenged classification of SaaS services under GST regime. Revenue treated cloud services as 'licensing of software' at 18% while company argued for 'IT services' classification. Court referred to CBIC clarifications and ruled in favor of IT services classification.",
+    "embedding_vector": [0.28, 0.83, 0.41, 0.65, 0.12, 0.77, 0.53, 0.36, 0.90, 0.22, 0.59, 0.46, 0.74, 0.18, 0.85, 0.31, 0.67, 0.09, 0.79, 0.44, 0.56, 0.23, 0.88, 0.37, 0.62, 0.15, 0.71, 0.50, 0.34, 0.82, 0.27, 0.68]
+  },
+  {
+    "case_title": "Workers Union vs Factory Owner — Industrial Safety",
+    "court": "Allahabad High Court",
+    "year": 2022,
+    "summary": "Workers union filed PIL after industrial accident killing 3 workers in chemical plant. Investigation revealed non-compliance with Factories Act safety norms. Court directed mandatory safety audit of all chemical plants in the state and enhanced compensation under Workmen's Compensation Act.",
+    "embedding_vector": [0.47, 0.65, 0.30, 0.78, 0.22, 0.54, 0.86, 0.13, 0.71, 0.40, 0.62, 0.88, 0.26, 0.50, 0.35, 0.79, 0.17, 0.73, 0.41, 0.58, 0.84, 0.09, 0.66, 0.32, 0.51, 0.76, 0.20, 0.89, 0.43, 0.15, 0.69, 0.37]
+  },
+  {
+    "case_title": "Agarwal vs Bank — Loan Recovery and NPA Classification",
+    "court": "Calcutta High Court",
+    "year": 2024,
+    "summary": "Borrower challenged SARFAESI action by bank for recovery of Rs. 4.5 crore loan classified as NPA. Borrower alleged premature NPA classification without following RBI circular on resolution framework. Court stayed auction and directed bank to reconsider restructuring application.",
+    "embedding_vector": [0.19, 0.71, 0.55, 0.38, 0.82, 0.24, 0.67, 0.43, 0.76, 0.31, 0.58, 0.85, 0.14, 0.69, 0.47, 0.23, 0.80, 0.36, 0.63, 0.50, 0.92, 0.17, 0.74, 0.28, 0.56, 0.41, 0.87, 0.10, 0.65, 0.33, 0.78, 0.22]
+  }
+]

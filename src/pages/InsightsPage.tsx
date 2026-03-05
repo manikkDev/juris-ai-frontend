@@ -1,27 +1,55 @@
-import { sampleCases, analyticsData } from "@/services/mockData";
+import { useCases, useAnalytics } from "@/hooks/useFirestoreData";
 import { RiskBadge } from "@/components/RiskBadge";
 import { Brain, TrendingUp, AlertTriangle, Clock } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from "recharts";
+import { Button } from "@/components/ui/button";
 
 export default function InsightsPage() {
-  const highRiskCases = sampleCases.filter((c) => c.adjournmentRisk > 0.7);
-  const avgRisk = (sampleCases.reduce((a, b) => a + b.adjournmentRisk, 0) / sampleCases.length * 100).toFixed(1);
-  const avgDelay = (sampleCases.reduce((a, b) => a + b.delayProbability, 0) / sampleCases.length * 100).toFixed(1);
+  const { cases, loading, error } = useCases();
+  const { analytics } = useAnalytics();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20 text-muted-foreground">
+        <div className="text-center space-y-2">
+          <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto" />
+          <p className="text-sm">Loading AI insights from Firestore...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center space-y-3 max-w-md">
+          <AlertTriangle className="h-10 w-10 text-destructive mx-auto" />
+          <h2 className="text-lg font-semibold">Failed to load insights</h2>
+          <p className="text-sm text-muted-foreground">{error}</p>
+          <Button variant="outline" size="sm" onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const highRiskCases = cases.filter((c) => c.adjournmentRisk > 0.7);
+  const avgRisk = cases.length ? (cases.reduce((a, b) => a + b.adjournmentRisk, 0) / cases.length * 100).toFixed(1) : "0";
+  const avgDelay = cases.length ? (cases.reduce((a, b) => a + b.delayProbability, 0) / cases.length * 100).toFixed(1) : "0";
 
   const riskDistribution = [
-    { range: "0-20%", count: sampleCases.filter((c) => c.adjournmentRisk < 0.2).length },
-    { range: "20-40%", count: sampleCases.filter((c) => c.adjournmentRisk >= 0.2 && c.adjournmentRisk < 0.4).length },
-    { range: "40-60%", count: sampleCases.filter((c) => c.adjournmentRisk >= 0.4 && c.adjournmentRisk < 0.6).length },
-    { range: "60-80%", count: sampleCases.filter((c) => c.adjournmentRisk >= 0.6 && c.adjournmentRisk < 0.8).length },
-    { range: "80-100%", count: sampleCases.filter((c) => c.adjournmentRisk >= 0.8).length },
+    { range: "0-20%", count: cases.filter((c) => c.adjournmentRisk < 0.2).length },
+    { range: "20-40%", count: cases.filter((c) => c.adjournmentRisk >= 0.2 && c.adjournmentRisk < 0.4).length },
+    { range: "40-60%", count: cases.filter((c) => c.adjournmentRisk >= 0.4 && c.adjournmentRisk < 0.6).length },
+    { range: "60-80%", count: cases.filter((c) => c.adjournmentRisk >= 0.6 && c.adjournmentRisk < 0.8).length },
+    { range: "80-100%", count: cases.filter((c) => c.adjournmentRisk >= 0.8).length },
   ];
 
   return (
     <div className="space-y-6 max-w-[1400px]">
       <div>
         <h1 className="text-2xl font-display font-bold">AI Insights</h1>
-        <p className="text-sm text-muted-foreground">Machine learning predictions and risk analysis</p>
+        <p className="text-sm text-muted-foreground">Predictions and risk analysis — eCourts / AWS Open Data (2020-2024)</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -51,8 +79,8 @@ export default function InsightsPage() {
             {highRiskCases.slice(0, 10).map((c) => (
               <div key={c.caseId} className="flex items-center justify-between py-2 px-3 rounded-md bg-muted/50 text-xs">
                 <div>
-                  <span className="font-mono font-medium">{c.caseId}</span>
-                  <span className="text-muted-foreground ml-2">{c.caseType}</span>
+                  <span className="font-mono font-medium">{c.caseNumber}</span>
+                  <span className="text-muted-foreground ml-2">{c.caseType} · {c.court}</span>
                 </div>
                 <RiskBadge risk={c.adjournmentRisk} />
               </div>
