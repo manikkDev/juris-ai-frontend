@@ -30,7 +30,20 @@ export default function LoginPage() {
       toast.success(isLogin ? "Welcome back!" : "Account created successfully!");
       navigate("/");
     } catch (err: any) {
-      toast.error(err.message || "Authentication failed");
+      const code = err?.code || "";
+      let msg = "Authentication failed";
+      if (code === "auth/invalid-credential" || code === "auth/user-not-found" || code === "auth/wrong-password") {
+        msg = "Invalid email or password. If you don't have an account, click Register below.";
+      } else if (code === "auth/weak-password") {
+        msg = "Password must be at least 6 characters.";
+      } else if (code === "auth/email-already-in-use") {
+        msg = "This email is already registered. Try signing in instead.";
+      } else if (code === "auth/invalid-email") {
+        msg = "Please enter a valid email address.";
+      } else if (err.message) {
+        msg = err.message;
+      }
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -89,7 +102,7 @@ export default function LoginPage() {
               </>
             )}
             <div><Label>Email</Label><Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="judge@courts.gov.in" required /></div>
-            <div><Label>Password</Label><Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required /></div>
+            <div><Label>Password</Label><Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required minLength={6} /><p className="text-[10px] text-muted-foreground mt-1">Minimum 6 characters</p></div>
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Please wait..." : isLogin ? "Sign In" : "Create Account"}
               <ArrowRight className="ml-2 h-4 w-4" />
